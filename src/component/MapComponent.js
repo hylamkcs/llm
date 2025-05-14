@@ -44,7 +44,7 @@ export default MapComponent;
 const containerStyle = {
     position: 'absolute',
     top: '20%',
-    right: '5%',
+    right: '10%',
     width: '40%',
     height: '400px'
 };
