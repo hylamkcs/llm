@@ -44,7 +44,7 @@ const FormComponent = ({setStartPoint, setEndPoint, setPath}) => {
         const data = { origin: startPoint, destination: endPoint };
         try {
             // Post to the API with both point
-            fetch(address + "/mock/route/success", {
+            fetch(address + "/route", {
                 method: "post",
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const FormComponent = ({setStartPoint, setEndPoint, setPath}) => {
 
     const getPath = (token) => {
         try {
-            fetch(address + "/mock/route/success" , { method: "get" })
+            fetch(address + "/route/" + token , { method: "get" })
             .then((res) => res.json())
             .then((data) => {
                 if (data) {
