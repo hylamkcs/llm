@@ -1,8 +1,8 @@
 // MapComponent.jsx
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker } from '@react-google-maps/api';
 
-const MapComponent = (startPoint ,endPoint) => {
+const MapComponent = ({startPoint ,endPoint}) => {
     const [position, setPosition] = useState(null);
     const [error, setError] = useState(null);
     useEffect(() => {
@@ -25,17 +25,17 @@ const MapComponent = (startPoint ,endPoint) => {
     };
         getLocation();
     }, []);
-
+    console.log(startPoint,endPoint)
     return (
-        <LoadScript googleMapsApiKey="AIzaSyCkJ3Sdk0nMhiW5tidgqffVBqaxLms2kio">
         <GoogleMap
             mapContainerStyle={containerStyle}
-            center={position}
+            center={endPoint!==null?endPoint:startPoint!==null?startPoint:position}
             zoom={15}
         >
-            <Marker position={position} />
+          { (startPoint === null && endPoint === null) && <Marker position={position} /> }
+          { startPoint !== null && <Marker position={startPoint} /> }
+          { endPoint !== null && <Marker position={endPoint} /> }  
         </GoogleMap>
-        </LoadScript>
     );
 };
 
@@ -45,6 +45,6 @@ const containerStyle = {
     position: 'absolute',
     top: '20%',
     right: '5%',
-    width: '600px',
+    width: '40%',
     height: '400px'
 };

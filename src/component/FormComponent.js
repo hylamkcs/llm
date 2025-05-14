@@ -1,37 +1,65 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
+import { Autocomplete } from '@react-google-maps/api';
 
-const FormComponent = (setStartPoint, setEndPoint) => {
-    
-    const [sloc, setsloc] = useState(null);
-    const [eloc, seteloc] = useState(null);
-
+const FormComponent = ({setStartPoint, setEndPoint}) => {
+    const startRef = useRef();
+    const endRef = useRef();
+    const startAutocompleteRef = useRef();
+    const endAutocompleteRef = useRef();
     return (
         <form style={containerStyle}>
             <table>
                 <tr>
-                    <td>
+                    <td style={labelStyle}>
                         <label>Starting Location: </label>
                     </td>
                     <td>
-                        <input
-                            type="text"
-                            value={sloc}
-                            onChange={(e) => {setsloc(e.target.value); setStartPoint(e.target.value);}}
-                            required
-                        />
+                        <Autocomplete
+                            onLoad={(autocomplete) => {
+                                startAutocompleteRef.current = autocomplete;
+                            }}
+                            onPlaceChanged={() => {
+                                const place = startAutocompleteRef.current.getPlace();
+                                if (place?.geometry) {
+                                    // Retrieve the latitue and longitude for map marker
+                                    const lat = place.geometry.location.lat();
+                                    const lng = place.geometry.location.lng();
+                                    setStartPoint({ lat: lat, lng: lng });
+                                    console.log("Start Coordinates:", lat, lng);
+                                }
+                            }}
+                        >
+                            <input
+                                type="text"
+                                ref={startRef}
+                            />
+                        </Autocomplete>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style={labelStyle}>
                         <label>Drop-off Point: </label>
                     </td>
                     <td>
+                        <Autocomplete
+                            onLoad={(autocomplete) => {
+                                endAutocompleteRef.current = autocomplete;
+                            }}
+                            onPlaceChanged={() => {
+                                const place = endAutocompleteRef.current.getPlace();
+                                if (place?.geometry) {
+                                    const lat = place.geometry.location.lat();
+                                    const lng = place.geometry.location.lng();
+                                    setEndPoint({ lat: lat, lng: lng });
+                                    console.log("Start Coordinates:", lat, lng);
+                                }
+                            }}
+                        >
                         <input
                             type="text"
-                            value={eloc}
-                            onChange={(e) => {seteloc(e.target.value); setEndPoint(e.target.value)}}
-                            required
+                            ref={endRef}
                         />
+                        </Autocomplete>
                     </td>
                 </tr>
             </table>
@@ -49,6 +77,4 @@ const containerStyle = {
     height: '50px'
 };
 
-const leftStyle = {
-    textan
-};
+const labelStyle = { textAlign: 'right', paddingRight: '10px' };
