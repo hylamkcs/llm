@@ -25,4 +25,4 @@ The static page is stored in '/build'
 You can access the page through ["https://hylamkcs.github.io/frontend_llm/"]
 
 The API_KEYS is already refreshed. 
-Please use your own API for the Google Map API and connect your own backend server.
+Please use your own API for the Google Map API and connect your own backend server using the data-template.json.
