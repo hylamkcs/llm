@@ -21,7 +21,7 @@ const FormComponent = ({setStartPoint, setEndPoint, setPath}) => {
         setAlertMsg("");
         setDist(null);
         setTotalTime(null);
-        setPath(null)
+        setPath(null);
     }
 
     const address = data.MOCK_API;
@@ -33,15 +33,12 @@ const FormComponent = ({setStartPoint, setEndPoint, setPath}) => {
         setAlertMsg("");
         setDist(null);
         setTotalTime(null);
+        setPath(null);
         // Upload the data
         postData();
     }
 
     const postData = () => {
-        // Get the origin and destination address
-        const startPoint = startRef.current.value;
-        const endPoint = endRef.current.value;
-        const data = { origin: startPoint, destination: endPoint };
         try {
             // Post to the API with both point
             fetch(address + "/route", {
@@ -49,7 +46,7 @@ const FormComponent = ({setStartPoint, setEndPoint, setPath}) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({ origin: startRef.current.value, destination: endRef.current.value }),
             })
             .then((res) => res.json())
             .then((data) => {
@@ -161,6 +158,7 @@ const FormComponent = ({setStartPoint, setEndPoint, setPath}) => {
             {alertMsg !== "" && <label className="alert">{alertMsg}</label>}
             {/* Path GET response */}
             {dist && <label className="info">Total distance: {dist}</label>}
+            <br />
             {totalTime && <label className="info">Total time: {totalTime}</label>}
             <div className="buttonHorizontal">
                 <button type="submit">Submit</button>

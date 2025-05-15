@@ -29,7 +29,7 @@ const MapComponent = ({startPoint, endPoint, path}) => {
     }, []);
     
     useEffect(() => {
-      setDirections(false);
+      setDirections(null);
       setHasRequested(false);
       setWaypoints([]);
       if (path?.length > 1) {
