@@ -18,7 +18,7 @@ If any, the error will be shown on the screen.
 
 To run the test cases for unitesting
 
-### `npm run build`
+### `npm run deploy`
 
 To set up the production mode of the web, which is deployed on the github page
 The static page is stored in '/build'
